@@ -161,11 +161,11 @@ export const FullPage3DBackground: React.FC = () => {
 
     // Animation Loop
     let animationFrameId: number;
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) / 1000;
 
       // Smooth scroll interpolation
       targetScrollY += (scrollY - targetScrollY) * 0.05;

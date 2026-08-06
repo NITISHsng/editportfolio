@@ -156,6 +156,11 @@ async function connectMongoDB() {
     return;
   }
 
+  if (mongoose.connection.readyState >= 1) {
+    isMongoConnected = true;
+    return;
+  }
+
   try {
     await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
     isMongoConnected = true;
@@ -174,6 +179,14 @@ async function connectMongoDB() {
 }
 
 connectMongoDB();
+
+// Ensure DB connection on every request
+app.use(async (req, res, next) => {
+  if (!isMongoConnected && process.env.MONGODB_URI) {
+    await connectMongoDB();
+  }
+  next();
+});
 
 // API ROUTES
 
@@ -334,4 +347,8 @@ async function startServer() {
   });
 }
 
-startServer();
+export default app;
+
+if (!process.env.VERCEL) {
+  startServer();
+}

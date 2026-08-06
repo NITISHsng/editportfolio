@@ -155,11 +155,11 @@ export const ThreeHeroCanvas: React.FC = () => {
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) / 1000;
 
       // Smooth Mouse Rotation
       targetX += (mouseX - targetX) * 0.05;
