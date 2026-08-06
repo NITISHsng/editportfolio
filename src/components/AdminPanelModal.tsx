@@ -99,7 +99,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       }
     } catch (err) {
       // Fallback local check if server unreachable
-      const fallbackPassword = (import.meta as any).env?.VITE_ADMIN_PASSWORD || '1425';
+      const fallbackPassword = (import.meta as any).env?.VITE_ADMIN_PASSWORD;
       if (passwordInput === fallbackPassword) {
         setIsAuthenticated(true);
         setPasswordInput('');

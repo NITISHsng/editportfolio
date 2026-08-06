@@ -209,7 +209,7 @@ app.get('/api/db-status', (req, res) => {
 // Admin Password Verification
 app.post('/api/admin/verify', (req, res) => {
   const { password } = req.body;
-  const adminPassword = process.env.ADMIN_PASSWORD || '1425';
+  const adminPassword = process.env.ADMIN_PASSWORD;
   if (password === adminPassword) {
     return res.json({ success: true, token: 'admin-session-active' });
   }
