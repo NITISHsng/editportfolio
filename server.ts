@@ -94,30 +94,37 @@ const DEFAULT_VIDEOS = [
 
 // Ensure local fallback database exists
 function initLocalDb() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_VIDEOS, null, 2), 'utf-8');
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    if (!fs.existsSync(DB_FILE)) {
+      fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_VIDEOS, null, 2), 'utf-8');
+    }
+  } catch (err) {
+    console.warn('Local file system is read-only or restricted. Using in-memory fallback.');
   }
 }
 initLocalDb();
 
 function readLocalDb(): any[] {
   try {
-    initLocalDb();
-    const data = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(data);
+    if (fs.existsSync(DB_FILE)) {
+      const data = fs.readFileSync(DB_FILE, 'utf-8');
+      return JSON.parse(data);
+    }
   } catch (err) {
     console.error('Error reading local JSON db:', err);
-    return [];
   }
+  return DEFAULT_VIDEOS;
 }
 
 function writeLocalDb(videos: any[]) {
   try {
     initLocalDb();
-    fs.writeFileSync(DB_FILE, JSON.stringify(videos, null, 2), 'utf-8');
+    if (fs.existsSync(DATA_DIR)) {
+      fs.writeFileSync(DB_FILE, JSON.stringify(videos, null, 2), 'utf-8');
+    }
   } catch (err) {
     console.error('Error writing local JSON db:', err);
   }
