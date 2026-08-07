@@ -34,36 +34,53 @@ const VideoSchema = new mongoose.Schema({
 const VideoModel = mongoose.models.Video || mongoose.model('Video', VideoSchema);
 
 let isMongoConnected = false;
+let lastMongoError = '';
+let lastConnectAttempt = 0;
 
 // Attempt MongoDB Connection
-async function connectMongoDB() {
+export async function connectMongoDB() {
   const mongoUri = process.env.MONGODB_URI;
   if (!mongoUri) {
     console.log('ℹ️ MONGODB_URI not provided in env.');
-    return;
+    lastMongoError = 'MONGODB_URI not configured in environment variables';
+    isMongoConnected = false;
+    return false;
   }
 
   if (mongoose.connection.readyState >= 1) {
     isMongoConnected = true;
-    return;
+    lastMongoError = '';
+    return true;
   }
 
+  lastConnectAttempt = Date.now();
+
   try {
-    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
+    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 7000 });
     isMongoConnected = true;
+    lastMongoError = '';
     console.log('✅ Connected to MongoDB database successfully!');
+    return true;
   } catch (err) {
-    console.warn('⚠️ MongoDB connection failed:', (err as Error).message);
+    const msg = (err as Error).message;
+    console.warn('⚠️ MongoDB connection failed:', msg);
     isMongoConnected = false;
+    lastMongoError = msg;
+    return false;
   }
 }
 
 connectMongoDB();
 
-// Ensure DB connection on every request
+// Ensure DB connection on request
 app.use(async (req, res, next) => {
-  if (!isMongoConnected && process.env.MONGODB_URI) {
-    await connectMongoDB();
+  if (mongoose.connection.readyState >= 1) {
+    isMongoConnected = true;
+  } else if (process.env.MONGODB_URI) {
+    // In serverless or on connection loss, attempt connection
+    if (Date.now() - lastConnectAttempt > 5000) {
+      await connectMongoDB();
+    }
   }
   next();
 });
@@ -75,7 +92,8 @@ app.get('/api/db-status', (req, res) => {
   res.json({
     connected: isMongoConnected,
     type: isMongoConnected ? 'mongodb' : 'none',
-    uriConfigured: Boolean(process.env.MONGODB_URI)
+    uriConfigured: Boolean(process.env.MONGODB_URI),
+    error: lastMongoError
   });
 });
 
