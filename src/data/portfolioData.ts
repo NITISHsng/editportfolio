@@ -23,7 +23,46 @@ export const EDITOR_INFO = {
   }
 };
 
-export const INITIAL_PROJECTS: VideoProject[] = [];
+export const INITIAL_PROJECTS: VideoProject[] = [
+  {
+    id: 'proj-kotgachh-temple',
+    title: 'Kotgachh Temple',
+    platform: 'youtube',
+    youtubeId: 'ZMHSazi2gjs',
+    videoUrl: 'https://youtu.be/ZMHSazi2gjs',
+    category: 'vlogs',
+    categoryLabel: 'Cinematic Vlog',
+    thumbnailUrl: `https://i.ytimg.com/vi/ZMHSazi2gjs/hqdefault.jpg`,
+    duration: '03:45',
+    viewsCount: '12K+',
+    retentionBoost: '+65%',
+    clientName: 'NITISH CHANDRA SINGHA',
+    softwareUsed: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve'],
+    description: 'Cinematic video showcasing the architecture, heritage, and serene atmosphere of Kotgachh Temple — featuring smooth motion graphics, professional color grading, and custom sound design.',
+    highlights: ['4K Cinematic Shots', 'Sound Design & Mastering', 'Color Grading'],
+    featured: true,
+    date: '2026-05'
+  },
+  {
+    id: 'proj-tour-with-friends',
+    title: 'my tour with friends',
+    platform: 'youtube',
+    youtubeId: 'KYLPlqvvrr8',
+    videoUrl: 'https://youtu.be/KYLPlqvvrr8',
+    category: 'vlogs',
+    categoryLabel: 'Travel & Vlog',
+    thumbnailUrl: `https://i.ytimg.com/vi/KYLPlqvvrr8/hqdefault.jpg`,
+    duration: '04:20',
+    viewsCount: '18K+',
+    retentionBoost: '+70%',
+    clientName: 'NITISH CHANDRA SINGHA',
+    softwareUsed: ['Adobe Premiere Pro', 'After Effects'],
+    description: 'A dynamic, high-energy travel vlog capturing unforgettable moments with friends — fast-cut editing, smooth speed ramps, vibrant color grading, and perfectly synced background music.',
+    highlights: ['Fast-paced Editing', 'Speed Ramping & Transitions', 'Custom BGM Sync'],
+    featured: true,
+    date: '2026-06'
+  }
+];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {

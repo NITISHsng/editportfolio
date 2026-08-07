@@ -13,10 +13,11 @@ import { ResumeModal } from './components/ResumeModal';
 import { ContactModal } from './components/ContactModal';
 import { FloatingSocials } from './components/FloatingSocials';
 import { FullPage3DBackground } from './components/FullPage3DBackground';
+import { INITIAL_PROJECTS } from './data/portfolioData';
 import { VideoProject } from './types';
 
 export default function App() {
-  const [projects, setProjects] = useState<VideoProject[]>([]);
+  const [projects, setProjects] = useState<VideoProject[]>(INITIAL_PROJECTS);
   const [selectedProject, setSelectedProject] = useState<VideoProject | null>(null);
   
   // Modals state
@@ -31,15 +32,17 @@ export default function App() {
       const res = await fetch('/api/videos');
       if (res.ok) {
         const data = await res.json();
-        if (data.videos && Array.isArray(data.videos)) {
+        if (data.videos && Array.isArray(data.videos) && data.videos.length > 0) {
           setProjects(data.videos);
         } else {
-          setProjects([]);
+          setProjects(INITIAL_PROJECTS);
         }
+      } else {
+        setProjects(INITIAL_PROJECTS);
       }
     } catch (err) {
       console.error('Error fetching videos from database:', err);
-      setProjects([]);
+      setProjects(INITIAL_PROJECTS);
     }
   };
 

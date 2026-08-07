@@ -1,17 +1,15 @@
 import React from 'react';
-import { Film, Code2, ShieldCheck } from 'lucide-react';
+import { Film, Code2 } from 'lucide-react';
 import { EDITOR_INFO } from '../data/portfolioData';
 
 interface HeaderProps {
-  onOpenEstimator: () => void;
-  onOpenResume: () => void;
-  onOpenContact: () => void;
-  onOpenAdmin: () => void;
+  onOpenEstimator?: () => void;
+  onOpenResume?: () => void;
+  onOpenContact?: () => void;
+  onOpenAdmin?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  onOpenAdmin
-}) => {
+export const Header: React.FC<HeaderProps> = () => {
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-[#0b0c10]/85 border-b border-cyan-500/15 shadow-lg shadow-black/40 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
@@ -37,17 +35,6 @@ export const Header: React.FC<HeaderProps> = ({
               B.Tech 4th Year CSE &bull; Motion & Video Editor
             </p>
           </div>
-        </div>
-
-        {/* Right Navigation Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            onClick={onOpenAdmin}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-950 via-slate-900 to-purple-950 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 text-xs font-mono shadow-md shadow-cyan-950 transition-all hover:scale-105 active:scale-95"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Admin Panel</span>
-          </button>
         </div>
 
       </div>

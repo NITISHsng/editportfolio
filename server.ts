@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import mongoose from 'mongoose';
 import 'dotenv/config';
@@ -10,7 +9,7 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// Mongoose Schema & Model for MongoDB
+// Clean Mongoose Schema & Model for MongoDB
 const VideoSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
   title: { type: String, required: true },
@@ -22,11 +21,9 @@ const VideoSchema = new mongoose.Schema({
   thumbnailUrl: { type: String, default: '' },
   duration: { type: String, default: '01:00' },
   viewsCount: { type: String, default: '100K+' },
-  retentionBoost: { type: String, default: '90% Retention' },
   clientName: { type: String, default: 'Client Project' },
   softwareUsed: { type: [String], default: ['Premiere Pro', 'After Effects'] },
   description: { type: String, default: '' },
-  highlights: { type: [String], default: [] },
   featured: { type: Boolean, default: false },
   date: { type: String, default: new Date().toISOString().slice(0, 7) }
 }, { timestamps: true });
@@ -141,7 +138,6 @@ app.post('/api/videos', async (req, res) => {
       category: videoData.category || 'vlogs',
       categoryLabel: videoData.categoryLabel || 'Video',
       softwareUsed: videoData.softwareUsed || ['Premiere Pro', 'After Effects'],
-      highlights: videoData.highlights || ['Professional Edit', 'Audio Mastered'],
       featured: videoData.featured !== undefined ? videoData.featured : true,
       date: videoData.date || new Date().toISOString().slice(0, 7)
     };

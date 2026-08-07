@@ -202,13 +202,17 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({
                           <span>AUTO-PLAYING</span>
                         </div>
                       </div>
-                    ) : (
+                    ) : project.youtubeId ? (
                       <img
-                        src={project.thumbnailUrl}
+                        src={`https://i.ytimg.com/vi/${project.youtubeId}/hqdefault.jpg`}
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                         loading="lazy"
                       />
+                    ) : (
+                      <div className="w-full h-full bg-slate-900 flex items-center justify-center">
+                        <Film className="w-12 h-12 text-slate-700" />
+                      </div>
                     )}
 
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
@@ -322,13 +326,17 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({
                           <span>AUTO-PLAYING</span>
                         </div>
                       </div>
-                    ) : (
+                    ) : project.youtubeId ? (
                       <img
-                        src={project.thumbnailUrl}
+                        src={`https://i.ytimg.com/vi/${project.youtubeId}/hqdefault.jpg`}
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                         loading="lazy"
                       />
+                    ) : (
+                      <div className="w-full h-full bg-slate-900 flex items-center justify-center">
+                        <Film className="w-10 h-10 text-slate-700" />
+                      </div>
                     )}
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
