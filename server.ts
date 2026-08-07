@@ -33,54 +33,51 @@ const VideoSchema = new mongoose.Schema({
 
 const VideoModel = mongoose.models.Video || mongoose.model('Video', VideoSchema);
 
-let isMongoConnected = false;
+let cachedMongoPromise: Promise<typeof mongoose> | null = null;
 let lastMongoError = '';
-let lastConnectAttempt = 0;
+
+export function isDbConnected(): boolean {
+  return mongoose.connection.readyState >= 1;
+}
 
 // Attempt MongoDB Connection
 export async function connectMongoDB() {
   const mongoUri = process.env.MONGODB_URI;
   if (!mongoUri) {
-    console.log('ℹ️ MONGODB_URI not provided in env.');
-    lastMongoError = 'MONGODB_URI not configured in environment variables';
-    isMongoConnected = false;
+    lastMongoError = 'MONGODB_URI environment variable is missing in Vercel Settings.';
+    console.warn('⚠️ MONGODB_URI not provided in env.');
     return false;
   }
 
   if (mongoose.connection.readyState >= 1) {
-    isMongoConnected = true;
     lastMongoError = '';
     return true;
   }
 
-  lastConnectAttempt = Date.now();
+  if (!cachedMongoPromise) {
+    cachedMongoPromise = mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 7000 });
+  }
 
   try {
-    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 7000 });
-    isMongoConnected = true;
+    await cachedMongoPromise;
     lastMongoError = '';
     console.log('✅ Connected to MongoDB database successfully!');
     return true;
   } catch (err) {
+    cachedMongoPromise = null;
     const msg = (err as Error).message;
     console.warn('⚠️ MongoDB connection failed:', msg);
-    isMongoConnected = false;
     lastMongoError = msg;
     return false;
   }
 }
 
-connectMongoDB();
+connectMongoDB().catch(() => {});
 
-// Ensure DB connection on request
+// Ensure DB connection before handling API requests
 app.use(async (req, res, next) => {
-  if (mongoose.connection.readyState >= 1) {
-    isMongoConnected = true;
-  } else if (process.env.MONGODB_URI) {
-    // In serverless or on connection loss, attempt connection
-    if (Date.now() - lastConnectAttempt > 5000) {
-      await connectMongoDB();
-    }
+  if (req.path.startsWith('/api') && process.env.MONGODB_URI && mongoose.connection.readyState !== 1) {
+    await connectMongoDB();
   }
   next();
 });
@@ -89,9 +86,10 @@ app.use(async (req, res, next) => {
 
 // Check DB Status
 app.get('/api/db-status', (req, res) => {
+  const connected = isDbConnected();
   res.json({
-    connected: isMongoConnected,
-    type: isMongoConnected ? 'mongodb' : 'none',
+    connected,
+    type: connected ? 'mongodb' : 'none',
     uriConfigured: Boolean(process.env.MONGODB_URI),
     error: lastMongoError
   });
@@ -110,11 +108,11 @@ app.post('/api/admin/verify', (req, res) => {
 // GET all videos
 app.get('/api/videos', async (req, res) => {
   try {
-    if (isMongoConnected) {
+    if (isDbConnected()) {
       const videos = await VideoModel.find().sort({ createdAt: -1 });
       return res.json({ videos, dbSource: 'mongodb' });
     } else {
-      return res.json({ videos: [], dbSource: 'none', warning: 'MongoDB is not connected.' });
+      return res.json({ videos: [], dbSource: 'none', warning: lastMongoError || 'MongoDB is not connected.' });
     }
   } catch (err) {
     console.error('Error fetching videos:', err);
@@ -125,8 +123,8 @@ app.get('/api/videos', async (req, res) => {
 // POST add new video
 app.post('/api/videos', async (req, res) => {
   try {
-    if (!isMongoConnected) {
-      return res.status(503).json({ error: 'MongoDB connection is required to add videos.' });
+    if (!isDbConnected()) {
+      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to add videos.' });
     }
 
     const videoData = req.body;
@@ -159,8 +157,8 @@ app.post('/api/videos', async (req, res) => {
 // DELETE video by ID
 app.delete('/api/videos/:id', async (req, res) => {
   try {
-    if (!isMongoConnected) {
-      return res.status(503).json({ error: 'MongoDB connection is required to delete videos.' });
+    if (!isDbConnected()) {
+      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to delete videos.' });
     }
 
     const { id } = req.params;
@@ -175,8 +173,8 @@ app.delete('/api/videos/:id', async (req, res) => {
 // PUT update video by ID
 app.put('/api/videos/:id', async (req, res) => {
   try {
-    if (!isMongoConnected) {
-      return res.status(503).json({ error: 'MongoDB connection is required to update videos.' });
+    if (!isDbConnected()) {
+      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to update videos.' });
     }
 
     const { id } = req.params;
@@ -193,8 +191,8 @@ app.put('/api/videos/:id', async (req, res) => {
 // RESET videos (clear database)
 app.post('/api/admin/reset', async (req, res) => {
   try {
-    if (!isMongoConnected) {
-      return res.status(503).json({ error: 'MongoDB connection is required to reset database.' });
+    if (!isDbConnected()) {
+      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to reset database.' });
     }
 
     await VideoModel.deleteMany({});
