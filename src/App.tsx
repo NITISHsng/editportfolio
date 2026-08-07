@@ -111,11 +111,11 @@ export default function App() {
         {/* 4. Multi-Track Timeline DAW Simulator */}
         <EditingStudioSimulator />
 
-        {/* 5. Computer Science + Video Editing Synergy */}
-        <TechSynergySection />
-
-        {/* 6. DaVinci Resolve Toolkit & Skills */}
+        {/* 5. DaVinci Resolve — What I Use */}
         <DavinciResolveSkills />
+
+        {/* 6. B.Tech CSE + Video Editing Synergy — Also a 🕸 Developer */}
+        <TechSynergySection />
 
       </main>
 

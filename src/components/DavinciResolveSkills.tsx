@@ -102,13 +102,13 @@ export const DavinciResolveSkills: React.FC = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 text-xs font-mono font-semibold">
-            <span>TECHNICAL PROFICIENCY</span>
+            <span>DAVINCI RESOLVE — TOOLS I WORK WITH</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            DaVinci Resolve <span className="text-cyan-400">Mastery & Toolkit</span>
+            DaVinci Resolve — <span className="text-cyan-400">Tools I Work With</span>
           </h2>
           <p className="text-slate-400 text-sm">
-            Comprehensive breakdown of editing, node color grading, Fairlight audio engineering, and Fusion motion tools.
+            A hands-on breakdown of every tool and technique I actively work with in DaVinci Resolve — from timeline editing and speed ramps to node-based color grading, Fairlight audio, and motion keyframing.
           </p>
         </div>
 
