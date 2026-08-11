@@ -61,8 +61,26 @@ export const INITIAL_PROJECTS: VideoProject[] = [
     highlights: ['Fast-paced Editing', 'Speed Ramping & Transitions', 'Custom BGM Sync'],
     featured: true,
     date: '2026-06'
-  }
-];
+  },
+  {
+    id: 'hiring',
+    title: 'unjob hire me?',
+    platform: 'youtube',
+    youtubeId: 'VtX6t1oEFfI',
+    videoUrl: 'https://youtube.com/shorts/VtX6t1oEFfI',
+    category: 'shorts',
+    categoryLabel: 'Shorts',
+    thumbnailUrl: `https://i.ytimg.com/vi/KYLPlqvvrr8/hqdefault.jpg`,
+    duration: '01:23',
+    viewsCount: '18K',
+    retentionBoost: '+70%',
+    clientName: 'Unjob',
+    softwareUsed: ['Davinci resolve'],
+    description: 'This Video I Made for Unjob editing test',
+    highlights: ['try to make it '],
+    featured: true,
+    date: '2026-07'
+  }];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
