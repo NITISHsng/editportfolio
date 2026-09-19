@@ -26,7 +26,7 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
             <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-700/80 text-cyan-400 text-xs font-mono font-semibold tracking-wide">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                <span>B.TECH 4TH YEAR CSE &bull; PROFESSIONAL VIDEO EDITOR</span>
+                {/* <span>B.TECH 4TH YEAR CSE &bull; PROFESSIONAL VIDEO EDITOR</span> */}
               </div>
 
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono">

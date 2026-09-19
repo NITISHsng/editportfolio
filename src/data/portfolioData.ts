@@ -23,7 +23,25 @@ export const EDITOR_INFO = {
   }
 };
 
-export const INITIAL_PROJECTS: VideoProject[] = [
+export const INITIAL_PROJECTS: VideoProject[] = [{
+    id: 'proj-singhainfra',
+    title: 'Singhainfra Company Video',
+    platform: 'youtube',
+    youtubeId: '1RHNviP6qW4',
+    videoUrl: 'https://youtu.be/1RHNviP6qW4?si=Xfp3BEFOjZld0-lY',
+    category: 'vlogs',
+    categoryLabel: 'Corporate Video',
+    thumbnailUrl: `https://i.ytimg.com/vi/1RHNviP6qW4/hqdefault.jpg`,
+    duration: '01:00',
+    viewsCount: '1K+',
+    retentionBoost: '+50%',
+    clientName: 'Singhainfra Company',
+    softwareUsed: ['Davinci resolve '],
+    description: 'Corporate video showcasing Singhainfra company.',
+    highlights: ['Corporate Video', 'Professional Editing'],
+    featured: true,
+    date: '2026-09'
+  },
   {
     id: 'proj-kotgachh-temple',
     title: 'Kotgachh Temple',
@@ -61,25 +79,6 @@ export const INITIAL_PROJECTS: VideoProject[] = [
     highlights: ['Fast-paced Editing', 'Speed Ramping & Transitions', 'Custom BGM Sync'],
     featured: true,
     date: '2026-06'
-  },
-  {
-    id: 'hiring',
-    title: 'unjob hire me?',
-    platform: 'youtube',
-    youtubeId: 'VtX6t1oEFfI',
-    videoUrl: 'https://youtube.com/shorts/VtX6t1oEFfI',
-    category: 'shorts',
-    categoryLabel: 'Shorts',
-    thumbnailUrl: `https://i.ytimg.com/vi/KYLPlqvvrr8/hqdefault.jpg`,
-    duration: '01:23',
-    viewsCount: '18K',
-    retentionBoost: '+70%',
-    clientName: 'Unjob',
-    softwareUsed: ['Davinci resolve'],
-    description: 'This Video I Made for Unjob editing test',
-    highlights: ['try to make it '],
-    featured: true,
-    date: '2026-07'
   }];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
