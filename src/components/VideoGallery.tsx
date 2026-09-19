@@ -186,7 +186,7 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({
                   } gap-0 items-stretch min-h-0 lg:min-h-[320px]`}
                 >
                   {/* Thumbnail / Preview Box (50% Width on Large Screen) */}
-                  <div className="relative aspect-video lg:aspect-auto lg:w-1/2 shrink-0 bg-slate-950 overflow-hidden min-h-[220px] sm:min-h-[280px] lg:min-h-full">
+                  <div className={`relative ${project.category === 'shorts' || project.platform === 'instagram' ? 'aspect-[3/4] sm:aspect-[3/4] lg:aspect-[3/4] lg:w-[40%]' : 'aspect-video lg:aspect-auto lg:w-1/2'} shrink-0 bg-slate-950 overflow-hidden min-h-[220px] sm:min-h-[280px] lg:min-h-full`}>
                     
                     {/* Auto-play iframe when in frame or on hover */}
                     {(isVisible || isHovered) && project.youtubeId ? (
@@ -258,7 +258,7 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({
                   </div>
 
                   {/* Card Info & Details Box (50% Width on Large Screen) */}
-                  <div className="p-6 sm:p-8 lg:w-1/2 flex flex-col justify-between space-y-4 lg:space-y-6">
+                  <div className={`p-6 sm:p-8 flex flex-col justify-between space-y-4 lg:space-y-6 ${project.category === 'shorts' || project.platform === 'instagram' ? 'lg:w-[60%]' : 'lg:w-1/2'}`}>
                     
                     <div className="space-y-3">
                       <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug">
@@ -311,7 +311,7 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({
                   className="group relative bg-slate-900/90 rounded-2xl border border-slate-800 hover:border-cyan-500/60 shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer flex flex-col h-full hover:-translate-y-2"
                 >
                   {/* Thumbnail & Auto Hover-Video Preview */}
-                  <div className="relative aspect-video w-full shrink-0 overflow-hidden bg-slate-950">
+                  <div className={`relative ${project.category === 'shorts' || project.platform === 'instagram' ? 'aspect-[3/4]' : 'aspect-video'} w-full shrink-0 overflow-hidden bg-slate-950`}>
                     
                     {(isVisible || isHovered) && project.youtubeId ? (
                       <div className="absolute inset-0 z-10 w-full h-full pointer-events-none">

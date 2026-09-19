@@ -103,7 +103,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         <div className="p-4 sm:p-6 space-y-4 max-h-[80vh] overflow-y-auto">
           
           {/* Embedded Video Player Container */}
-          <div className={`relative ${isVertical ? 'aspect-[9/16] max-h-[520px] mx-auto' : 'aspect-video'} w-full rounded-xl overflow-hidden bg-black border border-slate-800 shadow-2xl`}>
+          <div className={`relative ${isVertical ? 'aspect-[3/4] max-h-[520px] mx-auto' : 'aspect-video'} w-full rounded-xl overflow-hidden bg-black border border-slate-800 shadow-2xl`}>
             <iframe
               src={getEmbedSource()}
               title={project.title}

@@ -29,7 +29,7 @@ export const INITIAL_PROJECTS: VideoProject[] = [{
     platform: 'youtube',
     youtubeId: '1RHNviP6qW4',
     videoUrl: 'https://youtu.be/1RHNviP6qW4?si=Xfp3BEFOjZld0-lY',
-    category: 'vlogs',
+    category: 'shorts',
     categoryLabel: 'Corporate Video',
     thumbnailUrl: `https://i.ytimg.com/vi/1RHNviP6qW4/hqdefault.jpg`,
     duration: '01:00',
