@@ -24,6 +24,42 @@ export const EDITOR_INFO = {
 };
 
 export const INITIAL_PROJECTS: VideoProject[] = [{
+    id: 'My_First_Vlog',
+    title: 'Bakkhali Sea Beach Adventure Trip',
+    platform: 'instagram',
+    youtubeId: 'Dd-tBLiJeGS',
+    videoUrl: 'https://www.instagram.com/p/Dd-tBLiJeGS/',
+    category: 'shorts',
+    categoryLabel: 'vlog',
+    thumbnailUrl: `https://www.instagram.com/p/Dd-tBLiJeGS/`,
+    duration: '0:47',
+    viewsCount: '2.5K+',
+    retentionBoost: '+50%',
+    clientName: 'self',
+    softwareUsed: ['Davinci resolve '],
+    description: 'Editing SinghaInfra & Co. Promo in DaVinci Resolve ',
+    highlights: ['Corporate Video', 'Professional Editing'],
+    featured: true,
+    date: '2026-09'
+  },{
+    id: 'My_First_Vlog',
+    title: 'My First Vlog',
+    platform: 'instagram',
+    youtubeId: 'Dd-tBLiJeGS',
+    category: 'shorts',
+    categoryLabel: 'vlog',
+    thumbnailUrl: `https://www.instagram.com/p/Ddlg84lpQNk/?hl=en`,
+    videoUrl: 'https://www.instagram.com/p/Ddlg84lpQNk/?hl=en',
+    duration: '0:47',
+    viewsCount: '2.5K+',
+    retentionBoost: '+50%',
+    clientName: 'self',
+    softwareUsed: ['Davinci resolve '],
+    description: 'Editing SinghaInfra & Co. Promo in DaVinci Resolve ',
+    highlights: ['Corporate Video', 'Professional Editing'],
+    featured: true,
+    date: '2026-09'
+  },{
     id: 'proj-singhainfra',
     title: 'Singhainfra Company Video',
     platform: 'youtube',
