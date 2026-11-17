@@ -135,7 +135,26 @@ export const INITIAL_PROJECTS: VideoProject[] = [{
     highlights: ['Corporate Video', 'Professional Editing'],
     featured: true,
     date: '2026-09'
-  }
+  },
+  {
+  id: 'proj-vial-fold-selection-machine',
+  title: 'clint video',
+  platform: 'youtube',
+  youtubeId: '78_XGRuyXOo',
+  videoUrl: 'https://youtube.com/shorts/78_XGRuyXOo',
+  category: 'shorts',
+  categoryLabel: 'Industrial & Automation',
+  thumbnailUrl: `https://i.ytimg.com/vi/78_XGRuyXOo/hqdefault.jpg`,
+  duration: '01:22',
+  viewsCount: '5K+',
+  retentionBoost: '+60%',
+  clientName: 'NITISH CHANDRA SINGHA',
+  softwareUsed: ['Adobe Premiere Pro', 'After Effects'],
+  description: 'An informative walkthrough of an automated Vial Fold Selection Machine that makes assembly processes error-proof, enhances safety with light curtains, and boosts production speed.',
+  highlights: ['Process Explanation', 'Clear Narration Sync', 'Industrial Automation Breakdown'],
+  featured: true,
+  date: '2026-06'
+}
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
