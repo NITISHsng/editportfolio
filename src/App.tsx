@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { VideoGallery } from './components/VideoGallery';
-import { BeforeAfterSlider } from './components/BeforeAfterSlider';
-import { EditingStudioSimulator } from './components/EditingStudioSimulator';
 import { TechSynergySection } from './components/TechSynergySection';
 import { DavinciResolveSkills } from './components/DavinciResolveSkills';
 import { VideoModal } from './components/VideoModal';
@@ -105,16 +103,10 @@ export default function App() {
           onSelectProject={(proj) => setSelectedProject(proj)}
         />
 
-        {/* 3. Color Grading Before/After Slider */}
-        <BeforeAfterSlider />
-
-        {/* 4. Multi-Track Timeline DAW Simulator */}
-        <EditingStudioSimulator />
-
-        {/* 5. DaVinci Resolve — What I Use */}
+        {/* 3. DaVinci Resolve — What I Use */}
         <DavinciResolveSkills />
 
-        {/* 6. B.Tech CSE + Video Editing Synergy — Also a 🕸 Developer */}
+        {/* 4. B.Tech CSE + Video Editing Synergy — Also a 🕸 Developer */}
         <TechSynergySection />
 
       </main>

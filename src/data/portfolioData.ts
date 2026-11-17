@@ -17,49 +17,51 @@ export const EDITOR_INFO = {
     github: 'https://github.com/NITISHsng',
     linkedin: 'https://www.linkedin.com/in/n1715h',
     youtube: 'https://www.youtube.com/@quickhelp260',
-    instagram: 'https://www.instagram.com/its_n1715h/',
+    instagram: 'https://www.instagram.com/talknitish',
     facebook: 'https://www.facebook.com/n1715h',
     whatsapp: 'https://wa.me/917001181488?text=Hi%20Nitish,%20I%20want%20to%20discuss%20a%20video%20editing%20project!'
   }
 };
 
 export const INITIAL_PROJECTS: VideoProject[] = [{
-    id: 'My_First_Vlog',
-    title: 'Bakkhali Sea Beach Adventure Trip',
-    platform: 'instagram',
-    youtubeId: 'Dd-tBLiJeGS',
-    videoUrl: 'https://www.instagram.com/p/Dd-tBLiJeGS/',
-    category: 'shorts',
-    categoryLabel: 'vlog',
-    thumbnailUrl: `https://www.instagram.com/p/Dd-tBLiJeGS/`,
-    duration: '0:47',
-    viewsCount: '2.5K+',
-    retentionBoost: '+50%',
-    clientName: 'self',
-    softwareUsed: ['Davinci resolve '],
-    description: 'Editing SinghaInfra & Co. Promo in DaVinci Resolve ',
-    highlights: ['Corporate Video', 'Professional Editing'],
-    featured: true,
-    date: '2026-09'
-  },{
-    id: 'My_First_Vlog',
-    title: 'My First Vlog',
-    platform: 'instagram',
-    youtubeId: 'Dd-tBLiJeGS',
-    category: 'shorts',
-    categoryLabel: 'vlog',
-    thumbnailUrl: `https://www.instagram.com/p/Ddlg84lpQNk/?hl=en`,
-    videoUrl: 'https://www.instagram.com/p/Ddlg84lpQNk/?hl=en',
-    duration: '0:47',
-    viewsCount: '2.5K+',
-    retentionBoost: '+50%',
-    clientName: 'self',
-    softwareUsed: ['Davinci resolve '],
-    description: 'Editing SinghaInfra & Co. Promo in DaVinci Resolve ',
-    highlights: ['Corporate Video', 'Professional Editing'],
-    featured: true,
-    date: '2026-09'
-  },{
+  id: 'proj-elon-musk-starlink',
+  title: 'Client | Graphic ka adda ',
+  platform: 'youtube',
+  youtubeId: '78_XGRuyXOo',
+  videoUrl: 'https://youtube.com/shorts/78_XGRuyXOo?feature=share',
+  category: 'shorts',
+  categoryLabel: 'Tech & News',
+  thumbnailUrl: `https://resi.io/blog/live-streaming-with-starlink-why-resi-makes-sense/`,
+  duration: '01:02',
+  viewsCount: '10K+',
+  retentionBoost: '+65%',
+  clientName: 'NITISH CHANDRA SINGHA',
+  softwareUsed: ['Adobe Premiere Pro', 'After Effects'],
+  description: 'An engaging tech breakdown and commentary on Elon Musk calling out Indian telecom giants over Starlink monopoly, satellite internet speeds, and what it means for consumers in India.',
+  highlights: ['Fast-paced Editing', 'Engaging Subtitles & Kinetics', 'News Commentary Style'],
+  featured: true,
+  date: '2026-06'
+}
+  // {
+  //   id: 'My_First_Vlog',
+  //   title: 'My First Vlog',
+  //   platform: 'instagram',
+  //   youtubeId: 'Dd-tBLiJeGS',
+  //   category: 'shorts',
+  //   categoryLabel: 'vlog',
+  //   thumbnailUrl: `https://www.instagram.com/p/Ddlg84lpQNk/?hl=en`,
+  //   videoUrl: 'https://www.instagram.com/p/Ddlg84lpQNk/?hl=en',
+  //   duration: '0:47',
+  //   viewsCount: '2.5K+',
+  //   retentionBoost: '+50%',
+  //   clientName: 'self',
+  //   softwareUsed: ['Davinci resolve '],
+  //   description: 'Editing SinghaInfra & Co. Promo in DaVinci Resolve ',
+  //   highlights: ['Corporate Video', 'Professional Editing'],
+  //   featured: true,
+  //   date: '2026-09'
+  // }
+  ,{
     id: 'proj-singhainfra',
     title: 'Singhainfra Company Video',
     platform: 'youtube',
@@ -78,25 +80,25 @@ export const INITIAL_PROJECTS: VideoProject[] = [{
     featured: true,
     date: '2026-09'
   },
-  {
-    id: 'proj-kotgachh-temple',
-    title: 'Kotgachh Temple',
-    platform: 'youtube',
-    youtubeId: 'ZMHSazi2gjs',
-    videoUrl: 'https://youtu.be/ZMHSazi2gjs',
-    category: 'vlogs',
-    categoryLabel: 'Cinematic Vlog',
-    thumbnailUrl: `https://i.ytimg.com/vi/ZMHSazi2gjs/hqdefault.jpg`,
-    duration: '03:45',
-    viewsCount: '12K+',
-    retentionBoost: '+65%',
-    clientName: 'NITISH CHANDRA SINGHA',
-    softwareUsed: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve'],
-    description: 'Cinematic video showcasing the architecture, heritage, and serene atmosphere of Kotgachh Temple — featuring smooth motion graphics, professional color grading, and custom sound design.',
-    highlights: ['4K Cinematic Shots', 'Sound Design & Mastering', 'Color Grading'],
-    featured: true,
-    date: '2026-05'
-  },
+  // {
+  //   id: 'proj-kotgachh-temple',
+  //   title: 'Kotgachh Temple',
+  //   platform: 'youtube',
+  //   youtubeId: 'ZMHSazi2gjs',
+  //   videoUrl: 'https://youtube.com/shorts/78_XGRuyXOo',
+  //   category: 'vlogs',
+  //   categoryLabel: 'Cinematic Vlog',
+  //   thumbnailUrl: `https://i.ytimg.com/vi/ZMHSazi2gjs/hqdefault.jpg`,
+  //   duration: '03:45',
+  //   viewsCount: '12K+',
+  //   retentionBoost: '+65%',
+  //   clientName: 'NITISH CHANDRA SINGHA',
+  //   softwareUsed: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve'],
+  //   description: 'Cinematic video showcasing the architecture, heritage, and serene atmosphere of Kotgachh Temple — featuring smooth motion graphics, professional color grading, and custom sound design.',
+  //   highlights: ['4K Cinematic Shots', 'Sound Design & Mastering', 'Color Grading'],
+  //   featured: true,
+  //   date: '2026-05'
+  // },
   {
     id: 'proj-tour-with-friends',
     title: 'my tour with friends',
@@ -115,7 +117,26 @@ export const INITIAL_PROJECTS: VideoProject[] = [{
     highlights: ['Fast-paced Editing', 'Speed Ramping & Transitions', 'Custom BGM Sync'],
     featured: true,
     date: '2026-06'
-  }];
+  },{
+    id: 'My_First_Vlog',
+    title: 'Bakkhali Sea Beach Adventure Trip',
+    platform: 'instagram',
+    youtubeId: 'Dd-tBLiJeGS',
+    videoUrl: 'https://www.instagram.com/p/Dd-tBLiJeGS/',
+    category: 'shorts',
+    categoryLabel: 'vlog',
+    thumbnailUrl: `https://www.instagram.com/p/Dd-tBLiJeGS/`,
+    duration: '0:47',
+    viewsCount: '2.5K+',
+    retentionBoost: '+50%',
+    clientName: 'self',
+    softwareUsed: ['Davinci resolve '],
+    description: 'Editing SinghaInfra & Co. Promo in DaVinci Resolve ',
+    highlights: ['Corporate Video', 'Professional Editing'],
+    featured: true,
+    date: '2026-09'
+  }
+];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {

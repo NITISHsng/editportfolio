@@ -176,7 +176,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       });
 
       if (res.ok) {
-        setFormSuccess(isEdit ? 'Video project updated successfully!' : 'Video project added successfully to database!');
+        setFormSuccess(isEdit ? 'Video project updated successfully!' : 'Video project added successfully!');
         clearForm();
         onRefreshVideos();
         if (isEdit) {
@@ -184,7 +184,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         }
         setTimeout(() => setFormSuccess(''), 4000);
       } else {
-        setFormError('Failed to save video to database.');
+        setFormError('Failed to save video.');
       }
     } catch (err) {
       setFormError('Network error trying to save video.');
@@ -217,16 +217,16 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   };
 
   const handleResetDatabase = async () => {
-    if (!window.confirm('Reset database to default videos? Custom added videos will be reset.')) return;
+    if (!window.confirm('Reset catalog to default videos? Custom added videos will be reset.')) return;
 
     try {
       const res = await fetch('/api/admin/reset', { method: 'POST' });
       if (res.ok) {
         onRefreshVideos();
-        alert('Database reset to default seed videos.');
+        alert('Catalog reset to default seed videos.');
       }
     } catch (err) {
-      alert('Error resetting database.');
+      alert('Error resetting catalog.');
     }
   };
 
@@ -255,7 +255,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   </span>
                 )}
               </div>
-              <p className="text-xs text-slate-400">Manage video projects and MongoDB database</p>
+              <p className="text-xs text-slate-400">Manage video projects and portfolio catalog</p>
             </div>
           </div>
 
@@ -323,53 +323,27 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
           <div className="flex-1 flex flex-col items-center w-full overflow-hidden bg-slate-950/40">
             <div className="w-full max-w-5xl flex flex-col flex-1 shadow-2xl border-x border-slate-800/50 bg-slate-900 overflow-hidden">
             
-            {/* Database Connection Status Header */}
+            {/* Catalog Storage Header */}
             <div className="px-6 py-3 bg-slate-950 border-b border-slate-800 flex flex-col gap-2 text-xs">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <Database className="w-4 h-4 text-cyan-400" />
-                  <span className="font-mono text-slate-300">Database Engine:</span>
-                  {dbStatus.connected ? (
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30 font-mono font-bold text-[11px] flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      MongoDB Atlas Connected
-                    </span>
-                  ) : (
-                    <span className="px-2 py-0.5 rounded-full bg-red-950 text-red-400 border border-red-500/30 font-mono font-bold text-[11px] flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3 text-red-400" />
-                      MongoDB Connection Failed
-                    </span>
-                  )}
+                  <span className="font-mono text-slate-300">Catalog Storage:</span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30 font-mono font-bold text-[11px] flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Local Portfolio Catalog (No Database Required)
+                  </span>
                 </div>
 
                 <button
                   onClick={handleResetDatabase}
                   className="text-[11px] font-mono text-slate-400 hover:text-amber-400 flex items-center gap-1 transition-colors"
-                  title="Reset database to initial default video projects"
+                  title="Reset catalog to initial default video projects"
                 >
                   <RefreshCw className="w-3 h-3" />
                   <span>Reset Seed Data</span>
                 </button>
               </div>
-
-              {!dbStatus.connected && (
-                <div className="mt-1 p-2.5 rounded-lg bg-amber-950/50 border border-amber-500/30 text-amber-300 text-[11px] flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold">MongoDB Atlas IP Whitelist Required: </span>
-                    <span>Your current IP is blocked by MongoDB Atlas firewall. Go to </span>
-                    <a 
-                      href="https://cloud.mongodb.com" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="underline text-amber-200 font-bold hover:text-white"
-                    >
-                      MongoDB Atlas Dashboard
-                    </a>
-                    <span> &rarr; <b>Network Access</b> &rarr; Click <b>Add IP Address</b> &rarr; Select <b>Allow Access from Anywhere (0.0.0.0/0)</b>.</span>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Navigation Tabs */}

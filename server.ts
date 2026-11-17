@@ -1,101 +1,71 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
-import mongoose from 'mongoose';
 import 'dotenv/config';
+import { INITIAL_PROJECTS } from './src/data/portfolioData';
+import { VideoProject } from './src/types';
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
-// Clean Mongoose Schema & Model for MongoDB
-const VideoSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  title: { type: String, required: true },
-  platform: { type: String, enum: ['youtube', 'instagram', 'facebook'], default: 'youtube' },
-  youtubeId: { type: String, default: '' },
-  videoUrl: { type: String, default: '' },
-  category: { type: String, default: 'vlogs' },
-  categoryLabel: { type: String, default: 'Video' },
-  thumbnailUrl: { type: String, default: '' },
-  duration: { type: String, default: '01:00' },
-  viewsCount: { type: String, default: '100K+' },
-  clientName: { type: String, default: 'Client Project' },
-  softwareUsed: { type: [String], default: ['Premiere Pro', 'After Effects'] },
-  description: { type: String, default: '' },
-  featured: { type: Boolean, default: false },
-  date: { type: String, default: new Date().toISOString().slice(0, 7) }
-}, { timestamps: true });
+const DATA_DIR = path.join(process.cwd(), 'data');
+const DATA_FILE = path.join(DATA_DIR, 'videos.json');
 
-const VideoModel = mongoose.models.Video || mongoose.model('Video', VideoSchema);
-
-let cachedMongoPromise: Promise<typeof mongoose> | null = null;
-let lastMongoError = '';
-
-export function isDbConnected(): boolean {
-  return mongoose.connection.readyState >= 1;
-}
-
-// Attempt MongoDB Connection
-export async function connectMongoDB() {
-  const mongoUri = process.env.MONGODB_URI;
-  if (!mongoUri) {
-    lastMongoError = 'MONGODB_URI environment variable is missing in Vercel Settings.';
-    console.warn('⚠️ MONGODB_URI not provided in env.');
-    return false;
-  }
-
-  if (mongoose.connection.readyState >= 1) {
-    lastMongoError = '';
-    return true;
-  }
-
-  if (!cachedMongoPromise) {
-    cachedMongoPromise = mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 7000 });
-  }
-
+function ensureDataDir() {
   try {
-    await cachedMongoPromise;
-    lastMongoError = '';
-    console.log('✅ Connected to MongoDB database successfully!');
-    return true;
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
   } catch (err) {
-    cachedMongoPromise = null;
-    const msg = (err as Error).message;
-    console.warn('⚠️ MongoDB connection failed:', msg);
-    lastMongoError = msg;
-    return false;
+    console.warn('Could not create data directory:', err);
   }
 }
 
-connectMongoDB().catch(() => {});
-
-// Ensure DB connection before handling API requests
-app.use(async (req, res, next) => {
-  if (req.path.startsWith('/api') && process.env.MONGODB_URI && mongoose.connection.readyState !== 1) {
-    await connectMongoDB();
+function loadVideos(): VideoProject[] {
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      const content = fs.readFileSync(DATA_FILE, 'utf-8');
+      const parsed = JSON.parse(content);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not read local videos.json, using INITIAL_PROJECTS:', err);
   }
-  next();
-});
+  return [...INITIAL_PROJECTS];
+}
+
+function persistVideos(videos: VideoProject[]) {
+  try {
+    ensureDataDir();
+    fs.writeFileSync(DATA_FILE, JSON.stringify(videos, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Failed to write videos to local JSON file (falling back to memory):', err);
+  }
+}
+
+let inMemoryVideos: VideoProject[] = loadVideos();
 
 // API ROUTES
 
-// Check DB Status
+// Check DB / Storage Status
 app.get('/api/db-status', (req, res) => {
-  const connected = isDbConnected();
   res.json({
-    connected,
-    type: connected ? 'mongodb' : 'none',
-    uriConfigured: Boolean(process.env.MONGODB_URI),
-    error: lastMongoError
+    connected: true,
+    type: 'local',
+    storage: 'Local File Storage',
+    error: ''
   });
 });
 
 // Admin Password Verification
 app.post('/api/admin/verify', (req, res) => {
   const { password } = req.body;
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  const adminPassword = process.env.ADMIN_PASSWORD || '1425';
   if (password === adminPassword) {
     return res.json({ success: true, token: 'admin-session-active' });
   }
@@ -103,14 +73,13 @@ app.post('/api/admin/verify', (req, res) => {
 });
 
 // GET all videos
-app.get('/api/videos', async (req, res) => {
+app.get('/api/videos', (req, res) => {
   try {
-    if (isDbConnected()) {
-      const videos = await VideoModel.find().sort({ createdAt: -1 });
-      return res.json({ videos, dbSource: 'mongodb' });
-    } else {
-      return res.json({ videos: [], dbSource: 'none', warning: lastMongoError || 'MongoDB is not connected.' });
+    // If no custom data file exists yet, always reflect latest INITIAL_PROJECTS from portfolioData.ts
+    if (!fs.existsSync(DATA_FILE)) {
+      inMemoryVideos = [...INITIAL_PROJECTS];
     }
+    return res.json({ videos: inMemoryVideos, dbSource: 'local' });
   } catch (err) {
     console.error('Error fetching videos:', err);
     res.status(500).json({ error: 'Failed to fetch videos' });
@@ -118,12 +87,8 @@ app.get('/api/videos', async (req, res) => {
 });
 
 // POST add new video
-app.post('/api/videos', async (req, res) => {
+app.post('/api/videos', (req, res) => {
   try {
-    if (!isDbConnected()) {
-      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to add videos.' });
-    }
-
     const videoData = req.body;
 
     if (!videoData.title || (!videoData.videoUrl && !videoData.youtubeId)) {
@@ -131,7 +96,7 @@ app.post('/api/videos', async (req, res) => {
     }
 
     const newId = videoData.id || `proj-${Date.now()}`;
-    const payload = {
+    const newVideo: VideoProject = {
       ...videoData,
       id: newId,
       platform: videoData.platform || 'youtube',
@@ -142,24 +107,23 @@ app.post('/api/videos', async (req, res) => {
       date: videoData.date || new Date().toISOString().slice(0, 7)
     };
 
-    const created = await VideoModel.create(payload);
-    return res.json({ success: true, video: created, dbSource: 'mongodb' });
+    inMemoryVideos = [newVideo, ...inMemoryVideos];
+    persistVideos(inMemoryVideos);
+
+    return res.json({ success: true, video: newVideo, dbSource: 'local' });
   } catch (err) {
     console.error('Error adding video:', err);
-    res.status(500).json({ error: 'Failed to save video to database' });
+    res.status(500).json({ error: 'Failed to save video' });
   }
 });
 
 // DELETE video by ID
-app.delete('/api/videos/:id', async (req, res) => {
+app.delete('/api/videos/:id', (req, res) => {
   try {
-    if (!isDbConnected()) {
-      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to delete videos.' });
-    }
-
     const { id } = req.params;
-    await VideoModel.deleteOne({ id });
-    return res.json({ success: true, deletedId: id, dbSource: 'mongodb' });
+    inMemoryVideos = inMemoryVideos.filter((v) => v.id !== id);
+    persistVideos(inMemoryVideos);
+    return res.json({ success: true, deletedId: id, dbSource: 'local' });
   } catch (err) {
     console.error('Error deleting video:', err);
     res.status(500).json({ error: 'Failed to delete video' });
@@ -167,38 +131,49 @@ app.delete('/api/videos/:id', async (req, res) => {
 });
 
 // PUT update video by ID
-app.put('/api/videos/:id', async (req, res) => {
+app.put('/api/videos/:id', (req, res) => {
   try {
-    if (!isDbConnected()) {
-      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to update videos.' });
-    }
-
     const { id } = req.params;
     const updateData = req.body;
 
-    const updated = await VideoModel.findOneAndUpdate({ id } as any, updateData as any, { new: true } as any);
-    return res.json({ success: true, video: updated, dbSource: 'mongodb' });
+    let updatedVideo: VideoProject | null = null;
+    inMemoryVideos = inMemoryVideos.map((v) => {
+      if (v.id === id) {
+        updatedVideo = { ...v, ...updateData };
+        return updatedVideo;
+      }
+      return v;
+    });
+
+    if (!updatedVideo) {
+      return res.status(404).json({ error: 'Video not found' });
+    }
+
+    persistVideos(inMemoryVideos);
+    return res.json({ success: true, video: updatedVideo, dbSource: 'local' });
   } catch (err) {
     console.error('Error updating video:', err);
     res.status(500).json({ error: 'Failed to update video' });
   }
 });
 
-// RESET videos (clear database)
-app.post('/api/admin/reset', async (req, res) => {
+// RESET videos (clear custom data and reset to INITIAL_PROJECTS)
+app.post('/api/admin/reset', (req, res) => {
   try {
-    if (!isDbConnected()) {
-      return res.status(503).json({ error: lastMongoError || 'MongoDB connection is required to reset database.' });
+    try {
+      if (fs.existsSync(DATA_FILE)) {
+        fs.unlinkSync(DATA_FILE);
+      }
+    } catch (e) {
+      console.warn('Could not remove DATA_FILE during reset:', e);
     }
-
-    await VideoModel.deleteMany({});
-    return res.json({ success: true, videos: [], dbSource: 'mongodb' });
+    inMemoryVideos = [...INITIAL_PROJECTS];
+    return res.json({ success: true, videos: inMemoryVideos, dbSource: 'local' });
   } catch (err) {
-    console.error('Error resetting database:', err);
-    res.status(500).json({ error: 'Failed to reset database' });
+    console.error('Error resetting videos:', err);
+    res.status(500).json({ error: 'Failed to reset videos' });
   }
 });
-
 
 // VITE MIDDLEWARE & SERVER STARTUP
 async function startServer() {
