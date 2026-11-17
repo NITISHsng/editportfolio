@@ -41,27 +41,7 @@ export const INITIAL_PROJECTS: VideoProject[] = [{
   highlights: ['Fast-paced Editing', 'Engaging Subtitles & Kinetics', 'News Commentary Style'],
   featured: true,
   date: '2026-06'
-}
-  // {
-  //   id: 'My_First_Vlog',
-  //   title: 'My First Vlog',
-  //   platform: 'instagram',
-  //   youtubeId: 'Dd-tBLiJeGS',
-  //   category: 'shorts',
-  //   categoryLabel: 'vlog',
-  //   thumbnailUrl: `https://www.instagram.com/p/Ddlg84lpQNk/?hl=en`,
-  //   videoUrl: 'https://www.instagram.com/p/Ddlg84lpQNk/?hl=en',
-  //   duration: '0:47',
-  //   viewsCount: '2.5K+',
-  //   retentionBoost: '+50%',
-  //   clientName: 'self',
-  //   softwareUsed: ['Davinci resolve '],
-  //   description: 'Editing SinghaInfra & Co. Promo in DaVinci Resolve ',
-  //   highlights: ['Corporate Video', 'Professional Editing'],
-  //   featured: true,
-  //   date: '2026-09'
-  // }
-  ,{
+} ,{
     id: 'proj-singhainfra',
     title: 'Singhainfra Company Video',
     platform: 'youtube',
@@ -80,25 +60,6 @@ export const INITIAL_PROJECTS: VideoProject[] = [{
     featured: true,
     date: '2026-09'
   },
-  // {
-  //   id: 'proj-kotgachh-temple',
-  //   title: 'Kotgachh Temple',
-  //   platform: 'youtube',
-  //   youtubeId: 'ZMHSazi2gjs',
-  //   videoUrl: 'https://youtube.com/shorts/78_XGRuyXOo',
-  //   category: 'vlogs',
-  //   categoryLabel: 'Cinematic Vlog',
-  //   thumbnailUrl: `https://i.ytimg.com/vi/ZMHSazi2gjs/hqdefault.jpg`,
-  //   duration: '03:45',
-  //   viewsCount: '12K+',
-  //   retentionBoost: '+65%',
-  //   clientName: 'NITISH CHANDRA SINGHA',
-  //   softwareUsed: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve'],
-  //   description: 'Cinematic video showcasing the architecture, heritage, and serene atmosphere of Kotgachh Temple — featuring smooth motion graphics, professional color grading, and custom sound design.',
-  //   highlights: ['4K Cinematic Shots', 'Sound Design & Mastering', 'Color Grading'],
-  //   featured: true,
-  //   date: '2026-05'
-  // },
   {
     id: 'proj-tour-with-friends',
     title: 'my tour with friends',
