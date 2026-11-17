@@ -141,7 +141,7 @@ export const INITIAL_PROJECTS: VideoProject[] = [{
   title: 'clint video',
   platform: 'youtube',
   youtubeId: '78_XGRuyXOo',
-  videoUrl: 'https://youtube.com/shorts/78_XGRuyXOo',
+  videoUrl: 'https://youtube.com/shorts/Z1jt6Df7y3Y',
   category: 'shorts',
   categoryLabel: 'Industrial & Automation',
   thumbnailUrl: `https://i.ytimg.com/vi/78_XGRuyXOo/hqdefault.jpg`,
